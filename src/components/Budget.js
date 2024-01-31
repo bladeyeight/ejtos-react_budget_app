@@ -9,6 +9,13 @@ const Budget = () => {
     const handleBudgetChange = (event) => {
         console.log(event, event.target.value, budget)
         setNewBudget(event.target.value);
+
+        if (event.target.value > 20000) {
+            alert("The value budget cannot be over 20,000");
+            setNewBudget(budget);
+            return;
+        }
+
         dispatch({
             type: 'SET_BUDGET',
             payload: event.target.value,

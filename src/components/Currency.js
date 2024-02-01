@@ -13,13 +13,31 @@ const Currency = (props) => {
 
     const { dispatch, currency  } = useContext(AppContext);
     const [newCurrencyType, setCurrencyType] = useState(currency);
+    let currencyWord = '';
+
+    switch(currency) {
+        case '$':
+          currencyWord = '$ Dollar';
+          break;
+        case '£':
+            currencyWord = '£ Pound';
+          break;
+        case '€':
+            currencyWord = '€ Euro';
+          break;
+        case '₹':
+            currencyWord = '₹ Ruppee';
+          break;
+        default:
+            currencyWord = '£ Pound';
+      }
 
     const handleCurrencyChange = (event) => {
-        setCurrencyType(event.target.value)
-        console.log('handleCurrencyChange', event, event.target.value, currency)
+        setCurrencyType(event)
+        console.log('handleCurrencyChange', event, currency)
         dispatch({
-            type: 'SET_CURRENCY',
-            payload: event.target.value,
+            type: 'CHG_CURRENCY',
+            payload: event,
         });
     }
     return (
@@ -27,14 +45,14 @@ const Currency = (props) => {
             <style>{customStyles}</style>
             <Dropdown>
                 <Dropdown.Toggle variant="secondary" id="dropdown-basic" size="lg" className="light-green-btn">
-                    Currency({currency})
+                    Currency({currencyWord})
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu className="light-green-btn">
-                    <Dropdown.Item value="$" onClick={handleCurrencyChange}>$ Dollar</Dropdown.Item>
-                    <Dropdown.Item value="£" onClick={handleCurrencyChange}>£ Pound</Dropdown.Item>
-                    <Dropdown.Item value="€" onClick={handleCurrencyChange}>€ Euro</Dropdown.Item>
-                    <Dropdown.Item value="₹" onClick={handleCurrencyChange}>₹ Ruppee</Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleCurrencyChange('$')}>$ Dollar</Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleCurrencyChange('£')}>£ Pound</Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleCurrencyChange('€')}>€ Euro</Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleCurrencyChange('₹')}>₹ Ruppee</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
         </>
